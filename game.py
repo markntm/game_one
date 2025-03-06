@@ -12,6 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///game.db'
 db.init_app(app)
 
 
+
 @app.route('/')
 @app.route('/start_screen', methods=['GET', 'POST'])
 def start_screen():
