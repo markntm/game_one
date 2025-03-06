@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Screen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='start_screen.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Column for Save Slots -->
+        <div class="save-slots">
+            <div>Save Slots</div>
+
+            {% for i in range(5) %}
+                <div
+                    class="save-slot {{ 'empty' if characters | length <= i }}"
+                    id="slot-{{ i + 1 }}"
+                    data-id="{{ characters[i].id if characters | length > i }}"
+                    data-name="{{ characters[i].name if characters | length > i }}"
+                    data-classification="{{ characters[i].classification if characters | length > i }}"
+                    data-health="{{ characters[i].health if characters | length > i }}"
+                    data-mana="{{ characters[i].mana if characters | length > i }}"
+                    data-equipment="{{ characters[i].equipment if characters | length > i }}">
+
+                    {% if characters | length > i %}
+                        <p>{{ characters[i].name }}</p>
+                    {% else %}
+                        +
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Right-side Panel to display character details -->
+        <div id="character-info" class="character-info"></div>
+    </div>
+
+    <script>
+        // Select all save slots
+        const slots = document.querySelectorAll('.save-slot');
+        const characterInfo = document.getElementById('character-info');
+
+        slots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                if (slot.classList.contains('empty')) {
+                    // Handle creation of a new character
+                    characterInfo.innerHTML = `
+                        <h2>Create New Character</h2>
+                        <form action="/create_character" method="POST">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required><br>
+
+                            <label for="class">Class:</label>
+                            <select id="class" name="class" required>
+                                <option value="">--Select--</option>
+                                <option value="Swordsman">Swordsman</option>
+                                <option value="Knight">Knight</option>
+                                <option value="Mage">Mage</option>
+                            </select><br>
+
+                            <div class="character-actions">
+                                <button type="submit" id="create-btn" class="action-btn">Create</button>
+                                <button type="button" id="cancel-btn" class="action-btn">Cancel</button>
+                            </div>
+                        </form>
+                    `;
+
+                    // Handle cancel button to clear the character info panel
+                    document.getElementById('cancel-btn').addEventListener('click', () => {
+                        characterInfo.innerHTML = ''; // Clears the form
+                    });
+
+                } else {
+                    // Extract character data from the slot's data attributes
+                    const id = slot.getAttribute('data-id');
+                    const name = slot.getAttribute('data-name');
+                    const classification = slot.getAttribute('data-classification');
+                    const health = slot.getAttribute('data-health');
+                    const mana = slot.getAttribute('data-mana');
+                    const equipment = slot.getAttribute('data-equipment');
+
+                    characterInfo.innerHTML = `
+                        <h2>Character Details</h2>
+                        <p><strong>Name:</strong> ${name}</p>
+                        <p><strong>Class:</strong> ${classification}</p>
+                        <p><strong>Health:</strong> ${health}</p>
+                        <p><strong>Mana:</strong> ${mana}</p>
+                        <p><strong>Equipment:</strong> ${equipment}</p>
+                        <div class="character-actions">
+                            <form action="/game/${id}" method="GET">
+                                <button type="submit" id="continue-btn" class="action-btn">Continue</button>
+                            </form>
+                            <form action="/delete_character/${id}" method="POST">
+                                <button type="submit" id="delete-btn" class="action-btn">Delete</button>
+                            </form>
+                            <button id="cancel-btn" class="action-btn">Cancel</button>
+                        </div>
+
+                    `;
+
+                    // Handle cancel button to clear the character info panel
+                    document.getElementById('cancel-btn').addEventListener('click', () => {
+                        characterInfo.innerHTML = ''; // Clears the form
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

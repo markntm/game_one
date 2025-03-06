@@ -1,0 +1,247 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1d;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    background-color: #282828;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Left Side: Save Slots */
+.save-slots {
+    width: 30%;
+    background-color: #333333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.save-slot {
+    height: 18%;
+    background-color: #444444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #ffffff;
+    border: 2px solid #555555;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.save-slot:hover {
+    background-color: #555555;
+}
+
+/* Right Side: Character Details */
+.character-details {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    background-color: #222222;
+    padding: 20px;
+}
+
+.character-info {
+    flex: 1;
+    background-color: #333333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.character-info h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.character-info label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.character-info input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #555555;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+}
+
+.character-info p {
+    margin-bottom: 10px;
+}
+
+/* Action Buttons (Moved to the bottom) */
+.character-actions {
+    position: sticky;
+    position: bottom;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    background-color: #666666;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #888888;
+}
+
+#continue-btn {
+    background-color: #555555;
+}
+
+#continue-btn:hover {
+    background-color: #45a049;
+}
+
+#create-btn {
+    background-color: #555555;
+}
+
+#create-btn:hover {
+    background-color: #45a049;
+}
+
+#delete-btn {
+    background-color: #555555;
+}
+
+#delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+#cancel-btn, #cancel-create-btn {
+    background-color: #555555;
+}
+
+#cancel-btn:hover, #cancel-create-btn:hover {
+    background-color: #666666;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+.dropbtn:after {
+    content: '▼';
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: #444444;
+    color: #ffffff;
+}
+
+.dropdown-content a:hover {
+    background-color: #555555;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+/* Mobile and small screen support */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .save-slots {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .character-details {
+        width: 100%;
+    }
+
+    .character-actions {
+        position: static;
+        margin-top: 10px;
+    }
+
+    .dropbtn:after {
+        right: 5px;
+    }
+}

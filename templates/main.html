@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon RPG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Image Box -->
+        <div class="image-box">
+        </div>
+
+        <!-- Text Box -->
+        <div class="text-box" id="text-box">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        <script>
+            function scrollToBottom() {
+                const textBox = document.getElementById('text-box');
+                textBox.scrollTop = textBox.scrollHeight;
+            }
+                // Automatically scroll to the bottom after page load
+            window.onload = scrollToBottom;
+        </script>
+
+        <!-- Stats Box -->
+        <div class="stats-box">
+            <h3>Stats</h3>
+            <ul>
+                <li>Health: {{ character.health }}</li>
+                <li>Mana: {{ character.mana }}</li>
+                <li>Damage: {{ character.damage }}</li>
+                <li>Defense: {{ character.defense }}</li>
+                <li>Speed: {{ character.speed }}</li>
+                <li>Luck: {{ character.luck }}</li>
+                <li>Gold: {{ character.gold }}</li>
+            </ul>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box" id="info-box">
+            <h3>Room Info</h3>
+            <p>Explore the dungeon to reveal information about the current room.</p>
+        </div>
+
+        <!-- Action Box -->
+        <div class="action-box">
+            <button onclick="performAction('attack')">Attack</button>
+            <button onclick="performAction('special')">Special</button>
+            <button onclick="performAction('heal')">Heal</button>
+        </div>
+
+        <!-- Menu Box -->
+        <div class="menu-box">
+            <form action="/inventory/characters.id" method="POST">
+                <button type="submit" id="inventory-btn" class="action-btn">Inventory</button>
+            </form>
+            <button onclick="quitGame()">Quit Game</button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="input-box">
+            <form action="/main" method="POST" style="width: 100%; height: 100%;">
+                <input type="text"
+                       id="command-input"
+                       name="command"
+                       style="width: 80%; height: 100%; color: white; background-color: #333;"
+                       placeholder="Enter command here..."
+                       autocomplete="off">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function performAction(action) {
+            // Send action to the server
+            console.log('Performing action:', action);
+            // TODO: Add AJAX call to send action to the backend
+        }
+
+        function openInventory() {
+            console.log('Opening inventory...');
+            // TODO: Add logic to display the player's inventory
+        }
+
+        function quitGame() {
+            if (confirm('Are you sure you want to quit the game?')) {
+                window.location.href = '/start';
+            }
+        }
+
+        function handleInput(event) {
+            if (event.key === 'Enter') {
+                const command = document.getElementById('command-input').value;
+                console.log('Command entered:', command);
+                document.getElementById('command-input').value = '';
+                // TODO: Send command to the server for processing
+            }
+        }
+    </script>
+</body>
+
+</html>
