@@ -17,7 +17,7 @@
         <!-- Text Box -->
         <div class="text-box" id="text-box">
             {% for message in messages %}
-                <p>{{ message }}</p>
+                <p>{{ message|safe }}</p>
             {% endfor %}
         </div>
         <script>
@@ -51,9 +51,11 @@
 
         <!-- Action Box -->
         <div class="action-box">
-            <button onclick="performAction('attack')">Attack</button>
-            <button onclick="performAction('special')">Special</button>
-            <button onclick="performAction('heal')">Heal</button>
+            <button onclick="sendInput('1')">1</button>
+            <button onclick="sendInput('2')">2</button>
+            <button onclick="sendInput('3')">3</button>
+            <button onclick="sendInput('4')">4</button>
+            <button onclick="sendInput('5')">5</button>
         </div>
 
         <!-- Menu Box -->
@@ -66,15 +68,29 @@
 
         <!-- Input Box -->
         <div class="input-box">
-            <form action="/main" method="POST" style="width: 100%; height: 100%;">
+            <form action="/main" method="POST" id="input-form">
                 <input type="text"
                        id="command-input"
                        name="command"
                        style="width: 80%; height: 100%; color: white; background-color: #333;"
                        placeholder="Enter command here..."
-                       autocomplete="off">
+                       autocomplete="off"
+                       onkeydown="handleInput(event)">
             </form>
         </div>
+        <script>
+            function sendInput(input) {
+                document.getElementById('command-input').value = input;
+                document.getElementById('input-form').submit();
+            }
+
+            function handleInput(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent form from submitting normally
+                    document.getElementById('input-form').submit();
+                }
+            }
+        </script>
     </div>
 
     <script>

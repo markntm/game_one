@@ -51,7 +51,7 @@ def character_atk(command, character):
         damage = accuracy_calc(character.accuracy, session['enemy']['speed'], damage, text)
         damage = defense_calc(session['enemy']['defense'], damage, session['enemy']['block'])
         session['enemy']['health'] = round(session['enemy']['health'] - damage)
-        text.append(f"You attacked {session['enemy']['name']} for {damage} dmg.")
+        text.append(f"You attacked {session['enemy']['name']} for <span class='red-text'>{damage} DMG")
 
     elif command == '2':
         text = [f"{session['enemy']['name']} blocks."]
@@ -82,7 +82,7 @@ def enemy_atk(character):
         damage = accuracy_calc(session['enemy']['accuracy'], character.defense, damage, text)
         damage = defense_calc(character.defense, damage)
         character.health = round(character.health - damage)
-        text.append(f"{session['enemy']['name']} attacked you for {damage} dmg.")
+        text.append(f"{session['enemy']['name']} attacked you for <span class='red-text'>{damage} DMG")
 
     elif move == 'block':
         text = [f"{session['enemy']['name']} blocks."]
@@ -109,6 +109,7 @@ def battle_sequence(command, character):
         if session['enemy']['health'] <= 0:
             text.append(f'You have defeated {session['enemy']['name']}.')
             session['enemy'] = False
+            session['init'] = True
             return text
 
         text.extend(enemy_atk(character))
@@ -116,6 +117,7 @@ def battle_sequence(command, character):
             text.append(f'You have been defeated by {character.name}.')
             return text
 
+        text.append("<span class='gray-text'>Attack [1], Block [2], Special [3]")
         return text
 
     text.extend(enemy_atk(character))
@@ -129,6 +131,7 @@ def battle_sequence(command, character):
         session['enemy'] = False
         return text
 
+    text.append("<span class='gray-text'>Attack [1], Block [2], Special [3]")
     return text
 
 

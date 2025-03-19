@@ -88,6 +88,38 @@ body {
     display: flex;
     justify-content: space-around;
 }
+
+.action-box button {
+    background-color: #555;
+    color: white;
+    font-size: 20px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.action-box button:hover {
+    background-color: #777;
+}
+
+.red-text {
+    color: #c50d0d;
+    font-weight: bold;
+}
+.green-text {
+    color: #229522;
+    font-weight: bold;
+}
+.yellow-text {
+    color: #edd12a;
+    font-weight: normal;
+}
+.gray-text {
+    color: #c3c3c3;
+    font-weight: 200;
+}
+
 .menu-box {
     grid-area: menu-box;
     background-color: #444;
