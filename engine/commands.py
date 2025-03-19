@@ -5,7 +5,7 @@ from models.character import Character, select_character
 from models.enemy import Enemy
 from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
 from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment, all_enchantments
-from engine.combat import battle
+from engine.combat import battle_sequence
 
 
 def init_sessions(character_id):
@@ -23,7 +23,7 @@ def init_sessions(character_id):
 
 def outside(command, character):
     if session['init']:
-        text = ['Where would you like to go?', '1. Dungeon', '2. Shop', '3. Inn']
+        text = ['Where would you like to go?', '( Dungeon [1], Shop [2], Inn [3] )']
         session['init'] = False
         return text
 
@@ -120,9 +120,8 @@ def generate_dungeon(character):
     session['dungeon_room'] = room
 
     if room == "Enemy Room":
-        text = ['You entered an Enemy Room.']
-        session['Enemy'] = generate_enemy(character)
-        text.append('Attack/Block/Special')
+        session['enemy'] = generate_enemy(character)
+        text = [f'You encountered a {session['enemy']['name']}.', '( Attack [1], Block [2], Special [3] )']
     elif room == "Empty Room":
         text = ['You entered an Empty Room, there is nothing here.']
     elif room == "Merchant Room":
@@ -141,11 +140,12 @@ def dungeon(command, character):
     if session['init']:
         text = [f'Dungeon floor: {character.dungeon_level}.']
         text.extend(generate_dungeon(character))
+        session['init'] = False
         return text
     if session['dungeon_room'] == "Enemy Room":
         if session['enemy']:
             text = [f'You fight the {session['enemy']['name']}']
-            text.extend(battle(command, character))
+            text.extend(battle_sequence(command, character))
             return text
         return ['Enemy Error']
     return ['']
@@ -174,4 +174,3 @@ def process_command(command, character):
         text.extend(outside(command, character))
 
     return text
-

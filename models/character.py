@@ -55,7 +55,7 @@ class Character(db.Model):
         self.speed = speed
         self.luck = luck
 
-        self.dungeon_level = 0
+        self.dungeon_level = 1
 
         # Skills
         if skill is None:

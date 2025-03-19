@@ -59,7 +59,7 @@ class ShieldEnchantment(Enchantment):
 '''Enchantments'''
 
 
-def all_enchantments():
+def all_enchantments():  # COMMITED !
     weapon_enchantments = [
 
             WeaponEnchantment('Sharp', 'Common', damage=2, accuracy=-1, mana=1),

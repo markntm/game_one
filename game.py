@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from models import db
 from engine.commands import process_command, init_sessions
 from models.character import Character, select_character
+from models.enemy import inst_enemies
 from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment, all_enchantments
+from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment
 
 
 app = Flask(__name__)
@@ -143,7 +144,7 @@ def clear_session():
 def test():
     print("Running test mode...")
     with app.app_context():
-        all_enchantments()
+        inst_enemies()
     return
 
 
@@ -155,6 +156,7 @@ if __name__ == "__main__":
         test()
     else:
         app.run(debug=True)
+        print("Starting Game...")
 
 
 

@@ -45,7 +45,7 @@ def defense_calc(def_def, damage, block=False):
 
 
 def character_atk(command, character):
-    if command == 'attack':
+    if command == '1':
         text = []
         damage = character.damage
         damage = accuracy_calc(character.accuracy, session['enemy']['speed'], damage, text)
@@ -53,12 +53,15 @@ def character_atk(command, character):
         session['enemy']['health'] = round(session['enemy']['health'] - damage)
         text.append(f"You attacked {session['enemy']['name']} for {damage} dmg.")
 
-    elif command == 'block':
+    elif command == '2':
         text = [f"{session['enemy']['name']} blocks."]
         session['enemy']['block'] = True
 
-    elif command == 'special':
+    elif command == '3':
         text = [f"You used your special."]
+
+    else:
+        text = ["character_atk error"]
 
     return text
 
@@ -69,8 +72,8 @@ def enemy_atk(character):
     choice = ['attack', 'block']
     if session['enemy']['flight']:
         choice.append('toggle flight')
-    if session['enemy']['special']:
-        choice.append('special')
+    # if session['enemy']['special']:
+    #     choice.append('special')
     move = random.choice(choice)
 
     if move == 'attack':
@@ -99,7 +102,7 @@ def enemy_atk(character):
     return text
 
 
-def battle(command, character):
+def battle_sequence(command, character):
     text = ['']
     if character.speed >= session['enemy']['speed']:
         text.extend(character_atk(command, character))
@@ -127,7 +130,6 @@ def battle(command, character):
         return text
 
     return text
-
 
 
 

@@ -28,19 +28,22 @@ class Enemy(db.Model):
     damage_mod = db.Column(db.Integer)
     defense_mod = db.Column(db.Integer)
 
-    def __init__(self, name, classification, drop_experience, drop_gold, drop_chance, health, damage, defense,
-                 accuracy, speed, flight=False, element='Normal', exp_mod=1, gld_mod=1, chance_mod=1, health_mod=1, damage_mod=1, defense_mod=1):
+    def __init__(self, name, classification, drop_experience, drop_gold, drop_chance,
+                 health, damage, defense, accuracy, speed,
+                 flight=False, element='Normal',
+                 exp_mod=1, gld_mod=1, chance_mod=1, health_mod=1, damage_mod=1, defense_mod=1):
+
         self.name = name
         self.classification = classification
         self.element = element
         self.flight = flight
         self.drop_experience = drop_experience
         self.drop_gold = drop_gold
-        self.drop_chance = drop_chance
+        self.drop_chance = drop_chance  # 0.00 to 1.00 percentage chance
         self.health = health
         self.damage = damage
         self.defense = defense
-        self.accuracy = accuracy
+        self.accuracy = accuracy  # 0.00 to 1.00 percentage chance
         self.speed = speed
         self.exp_mod = exp_mod
         self.gld_mod = gld_mod
@@ -55,15 +58,18 @@ class Enemy(db.Model):
         drop_chance = self.drop_chance + (character_level * self.chance_mod)
         if drop_chance > 1:
             drop_chance = 1
-        health = self.drop_health + (character_level * self.health_mod)
-        damage = self.drop_damage + (character_level * self.damage_mod)
-        defense = self.drop_defense + (character_level * self.defense_mod)
+        health = self.health + (character_level * self.health_mod)
+        damage = self.damage + (character_level * self.damage_mod)
+        defense = self.defense + (character_level * self.defense_mod)
         return {"name": self.name, "classification": self.classification, "element": self.element,
                 "flight": self.flight, "flying": False, "block": False, "experience": experience, "gold": gold,
                 "drop_chance": drop_chance, "health": health, "damage": damage,
                 "defense": defense, "accuracy": self.accuracy, "speed": self.speed}
 
 
-def inst_enemies():
-    new_enemy = Enemy('Slime', 'Normal', 5, 1, 0.10, )
+def inst_enemies():  # COMMITED
+    new_enemy = Enemy('Slime', 'Normal', 5, 1, 0.10, 3, 1, 1, 1, 1)
+    db.session.add(new_enemy)
+    db.session.commit()
     return
+
