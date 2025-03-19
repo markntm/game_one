@@ -1,12 +1,8 @@
 from flask import Flask
 from models import db
+from models.character import character_items
 from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
 from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment
-
-character_items = db.Table('character_items',
-                           db.Column('character_id', db.Integer, db.ForeignKey('characters.id'), primary_key=True),
-                           db.Column('item_id', db.Integer, db.ForeignKey('items.id'), primary_key=True)
-                           )
 
 
 class Enemy(db.Model):
@@ -66,3 +62,8 @@ class Enemy(db.Model):
                 "flight": self.flight, "flying": False, "block": False, "experience": experience, "gold": gold,
                 "drop_chance": drop_chance, "health": health, "damage": damage,
                 "defense": defense, "accuracy": self.accuracy, "speed": self.speed}
+
+
+def inst_enemies():
+    new_enemy = Enemy('Slime', 'Normal', 5, 1, 0.10, )
+    return

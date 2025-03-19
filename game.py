@@ -140,16 +140,21 @@ def clear_session():
     return "Session cleared successfully", 200
 
 
+def test():
+    print("Running test mode...")
+    with app.app_context():
+        all_enchantments()
+    return
+
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-
-    with app.test_client() as client:
-        '''response = client.get('/clear_session')
-        print(response.status)'''
-        # all_enchantments()
-
-    app.run(debug=True)
+    testing = input("Mode: ")
+    if testing == 'test':
+        test()
+    else:
+        app.run(debug=True)
 
 
 

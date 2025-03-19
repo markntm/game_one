@@ -17,6 +17,8 @@ def init_sessions(character_id):
         session['location'] = 'outside'
     if 'init' not in session:
         session['init'] = True
+    if 'dungeon room' not in session:
+        session['dungeon room'] = 'Enemy Room'
 
 
 def outside(command, character):
@@ -27,11 +29,13 @@ def outside(command, character):
 
     if command == '1':
         session['location'] = 'dungeon'
+        session['init'] = True
         text = ['You entered the dungeon.']
         text.extend(dungeon(command, character))
 
     elif command == '2':
         session['location'] = 'shop'
+        session['init'] = True
         text = ['You entered the shop.']
 
     elif command == '3':
@@ -112,7 +116,7 @@ def generate_dungeon(character):
     else:
         rooms = ["Enemy Room", "Empty Room", "Merchant Room", "Chest Room"]
         room = random.choices(rooms, weights=[0.40, 0.30, 0.20, 0.10], k=1)
-        room = "Enemy Room"
+    room = "Enemy Room"
     session['dungeon_room'] = room
 
     if room == "Enemy Room":
@@ -138,7 +142,7 @@ def dungeon(command, character):
         text = [f'Dungeon floor: {character.dungeon_level}.']
         text.extend(generate_dungeon(character))
         return text
-    if session['dungeon_room'] == 'Enemy Room':
+    if session['dungeon_room'] == "Enemy Room":
         if session['enemy']:
             text = [f'You fight the {session['enemy']['name']}']
             text.extend(battle(command, character))
