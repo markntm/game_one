@@ -23,25 +23,32 @@ def init_sessions(character_id):
 
 def outside(command, character):
     if session['init']:
-        text = ['Where would you like to go?', "<span class='gray-text'>Dungeon [1], Shop [2], Inn [3]"]
+        text = ['Where would you like to go?',
+                "<span class='gray-text'>Dungeon [1], Shop [2], Inn [3]"]
         session['init'] = False
         return text
 
     if command == '1':
         session['location'] = 'dungeon'
         session['init'] = True
-        text = ['You entered the dungeon.']
+        text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
+                '  You entered the Dungeon',
+                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
         text.extend(dungeon(command, character))
 
     elif command == '2':
         session['location'] = 'shop'
         session['init'] = True
-        text = ['You entered the shop.']
+        text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
+                '    You entered the Shop',
+                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
 
     elif command == '3':
         session['location'] = 'inn'
         session['init'] = True
-        text = ['You entered the inn.']
+        text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
+                '    You entered the Inn',
+                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
         text.extend(inn(command, character))
 
     else:
@@ -121,16 +128,32 @@ def generate_dungeon(character):
 
     if room == "Enemy Room":
         session['enemy'] = generate_enemy(character)
-        text = [f"<span class='yellow-text'>You encountered a {session['enemy']['name']}.",
-                "<span class='gray-text'>Attack [1], Block [2], Special [3]"]
+        text = ["· · ─────────────────── ··『 ⚔ 』·· ─────────────────── · ·",
+                f"<span class='yellow-text'>You encountered a {session['enemy']['name']}.",
+                "<span class='gray-text'>Attack [1], Block [2], Special [3]",
+                "<span class='gray-text'>Enemy Stats [4], Character Stats [5]",
+                "· · ─────────────────── ··『 ⚔ 』·· ─────────────────── · ·"]
+
     elif room == "Empty Room":
-        text = [f"<span class='yellow-text'>You entered an Empty Room, there is nothing here."]
+        text = ["⌬══════════════════════⌬",
+                f"<span class='yellow-text'>You entered an Empty Room, there is nothing here.",
+                "⌬══════════════════════⌬"]
+
     elif room == "Merchant Room":
-        text = [f"<span class='yellow-text'>You entered a Merchant Room, you can sell equipment or buy his trade."]
+        text = ["⌬══════════════════════⌬",
+                f"<span class='yellow-text'>You entered a Merchant Room, you can sell equipment or buy his trade.",
+                "⌬══════════════════════⌬"]
+
     elif room == "Chest Room":
-        text = [f"<span class='yellow-text'>You encountered a chest! Open to see what it holds."]
+        text = ["⌬══════════════════════⌬",
+                f"<span class='yellow-text'>You encountered a chest! Open to see what it holds.",
+                "⌬══════════════════════⌬"]
+
     elif room == "Boss Room":
-        text = [f"<span class='yellow-text'>You entered a Boss Room."]
+        text = ["· · ─────────────────── ··『 ⚔ 』·· ─────────────────── · ·",
+                f"<span class='yellow-text'>You entered a Boss Room.",
+                "· · ─────────────────── ··『 ⚔ 』·· ─────────────────── · ·"]
+
     else:
         text = ["generate dungeon error"]
 
