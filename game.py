@@ -49,7 +49,7 @@ def continue_game(character_id):
     # Load the character from the database
     character = db.session.get(Character, character_id)
     session['character_id'] = character.id
-    messages = ['Enter: Continue']
+    messages = ['Press Anything to Start']
     session['init'] = True
 
     if character:
@@ -150,8 +150,10 @@ def test():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    testing = input("Mode: ")
-    if testing == 'test':
+
+    testing = False
+
+    if testing:
         test()
     else:
         app.run(debug=True)

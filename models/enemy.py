@@ -67,9 +67,58 @@ class Enemy(db.Model):
                 "defense": defense, "accuracy": self.accuracy, "speed": self.speed}
 
 
-def inst_enemies():  # COMMITED
-    new_enemy = Enemy('Slime', 'Normal', 5, 1, 0.10, 3, 1, 1, 1, 1)
+def inst_enemies():  #
+    new_enemy = Enemy('Cave Bat', 'Beast', 8, 3, 0.10, 5, 2, 1, 0.90, 5, flight=True)
     db.session.add(new_enemy)
+
+    new_enemy = Enemy('Goblin', 'Beast', 7, 5, 0.15, 7, 3, 2, 0.65, 2)
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Skeleton', 'Undead', 12, 8, 0.15, 10, 2, 3, 0.80, 2)
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Zombie', 'Undead', 10, 3, 0.15, 15, 2, 2, 0.50, 1)
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Wraith', 'Undead', 25, 20, 0.20, 20, 6, 5, 0.90, 4, flight=True, element='Dark')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Fire Imp', 'Beast', 18, 8, 0.20, 8, 6, 2, 0.75, 3, element='Fire')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Stone Golem', 'Construct', 50, 20, 0.25, 50, 5, 15, 0.60, 1, element='Earth')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Mimic', 'Construct', 30, 50, 0.15, 25, 7, 5, 0.70, 2)
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Dire Wolf', 'Beast', 20, 12, 0.15, 15, 5, 3, 0.85, 4)
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Venom Spider', 'Beast', 16, 6, 0.10, 9, 4, 2, 0.80, 5, element='Poison')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Undead Knight', 'Undead', 60, 40, 0.25, 50, 10, 8, 0.75, 2, element='Dark')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Cursed Armor', 'Construct', 45, 25, 0.25, 35, 8, 9, 0.65, 1, element='Dark')
+    db.session.add(new_enemy)
+    """
+    new_enemy = Enemy('Lich', 'Undead', 100, 100, 0.05, 75, 12, 6, 0.85, 3, element='Dark')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Frost Wyrm', 'Beast', 120, 200, 0.05, 90, 15, 10, 0.70, 3, flight=True, element='Ice')
+    db.session.add(new_enemy)
+    
+    new_enemy = Enemy('Phoenix', 'Beast', 150, 250, 0.02, 100, 20, 8, 0.90, 6, flight=True, element='Fire')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Kraken', 'Beast', 200, 500, 0.01, 150, 25, 12, 0.75, 2, element='Water')
+    db.session.add(new_enemy)
+
+    new_enemy = Enemy('Necromancer', 'Undead', 90, 150, 0.08, 55, 14, 5, 0.80, 3, element='Dark')
+    db.session.add(new_enemy)
+    """
     db.session.commit()
-    return
+
 

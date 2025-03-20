@@ -23,8 +23,9 @@ def init_sessions(character_id):
 
 def outside(command, character):
     if session['init']:
-        text = ['Where would you like to go?',
-                "<span class='gray-text'>Dungeon [1], Shop [2], Inn [3]"]
+        text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
+                'Where would you like to go?',
+                "<span class='gray-text'>Dungeon [1], Shop [2], Inn [3], Reset [5]"]
         session['init'] = False
         return text
 
@@ -51,6 +52,14 @@ def outside(command, character):
                 "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
         text.extend(inn(command, character))
 
+    elif command == '5':
+        session['action'] = 'default'
+        session['location'] = 'outside'
+        session['dungeon room'] = 'Enemy Room'
+        session['Enemy'] = False
+        session['init'] = True
+        text = ["Reset Successful."]
+
     else:
         text = ['Error outside']
 
@@ -64,7 +73,7 @@ def shop(command):
 # find way to figure out when character is tired or not
 def inn(command, character):
     if session['init']:
-        text = ['Where would you like to sleep?', '1. Normal Bed', '2. Comfy Bed', '3. Back']
+        text = ['Where would you like to sleep?', "<span class='gray-text'>Normal Bed [1], Comfy Bed [2], Back [3]"]
         session['init'] = False
         return text
 
@@ -162,11 +171,28 @@ def generate_dungeon(character):
 
 def dungeon(command, character):
     if session['init']:
-        text = [f'Dungeon floor: {character.dungeon_level}.']
+        text = [f'Dungeon floor: {character.dungeon_level}']
         text.extend(generate_dungeon(character))
         session['init'] = False
+        character.dungeon_level += 1
         return text
-    if session['dungeon_room'] == "Enemy Room":
+
+    if session['dungeon_room'] == "Cleared":
+        if command == "1":
+            session['init'] = True
+            text = ['You Proceed though the Dungeon.']
+            text.extend(dungeon(command, character))
+            return text
+        elif command == "2":
+            session['location'] = 'outside'
+            session['init'] = True
+            text = ['You exit the Dungeon.']
+            text.extend(outside(command, character))
+            return text
+        else:
+            return ['Cleared Room Error']
+
+    elif session['dungeon_room'] == "Enemy Room":
         if session['enemy']:
             text = []
             text.extend(battle_sequence(command, character))
@@ -176,7 +202,7 @@ def dungeon(command, character):
 
 
 def process_command(command, character):
-    text = ['---', 'Input: ' + str(command)]
+    text = ["<span class='blue-text'>Input: " + str(command)]
     init_sessions(character.id)
 
     if session['location'] == 'outside':
@@ -194,7 +220,8 @@ def process_command(command, character):
     if character.health <= 0:
         session['location'] = 'outside'
         session['init'] = True
-        # text.append['You wake up in the fields.']
+        character.health = character.mhealth
+        text.append('You wake up in the fields.')
         text.extend(outside(command, character))
 
     return text

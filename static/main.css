@@ -111,13 +111,29 @@ body {
     color: #229522;
     font-weight: bold;
 }
+.hp-text {
+    color: #c50d0d;
+    font-weight: bold;
+}
+.exp-text {
+    color: #2e8a2e;
+    font-weight: bold;
+}
+.gold-text {
+    color: #c8b920;
+    font-weight: bold;
+}
 .yellow-text {
     color: #edd12a;
     font-weight: normal;
 }
 .gray-text {
-    color: #c3c3c3;
-    font-weight: 200;
+    color: #b6b6b6;
+    font-weight: 100;
+}
+.blue-text {
+    color: #51b9dc;
+    font-weight: 100;
 }
 
 .menu-box {
