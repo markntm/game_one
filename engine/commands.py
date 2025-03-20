@@ -33,23 +33,20 @@ def outside(command, character):
         session['location'] = 'dungeon'
         session['init'] = True
         text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
-                '  You entered the Dungeon',
-                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
+                '  You entered the Dungeon']
         text.extend(dungeon(command, character))
 
     elif command == '2':
         session['location'] = 'shop'
         session['init'] = True
         text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
-                '    You entered the Shop',
-                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
+                '    You entered the Shop']
 
     elif command == '3':
         session['location'] = 'inn'
         session['init'] = True
         text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
-                '    You entered the Inn',
-                "──◇◆◇────◇◆◇────◇◆◇────◇◆◇──"]
+                '    You entered the Inn']
         text.extend(inn(command, character))
 
     elif command == '5':
@@ -59,6 +56,7 @@ def outside(command, character):
         session['Enemy'] = False
         session['init'] = True
         text = ["Reset Successful."]
+        text.extend(outside(command, character))
 
     else:
         text = ['Error outside']

@@ -67,6 +67,20 @@ class Enemy(db.Model):
                 "defense": defense, "accuracy": self.accuracy, "speed": self.speed}
 
 
+def print_stats(enemy):
+    text = [f"|| Stats:     {enemy["name"]}",
+            f"|| Type:      {enemy["classification"]}",
+            f"|| Element:   {enemy["element"]}",
+            f"|| Flying:    {enemy["flying"]}",
+            f"|| Health:    {enemy["health"]}",
+            f"|| Damage:    {enemy["damage"]}",
+            f"|| Defense:   {enemy["defense"]}",
+            f"|| Accuracy:  {enemy["accuracy"] * 100}%",
+            f"|| Speed:     {enemy["speed"]}",
+            " "]
+    return text
+
+
 def inst_enemies():  #
     new_enemy = Enemy('Cave Bat', 'Beast', 8, 3, 0.10, 5, 2, 1, 0.90, 5, flight=True)
     db.session.add(new_enemy)

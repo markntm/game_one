@@ -81,17 +81,18 @@ class Character(db.Model):
 
     def display_stats(self):
         text = []
-        text.append("Name: " + self.name)
-        text.append("Class: " + self.classification)
-        text.append("Level: " + str(self.level))
-        text.append("Experience: " + str(self.experience) + "/" + str(self.mexperience))
-        text.append("Health: " + str(self.health) + "/" + str(self.mhealth))
-        text.append("Mana: " + str(self.mana) + "/" + str(self.mmana))
-        text.append("Damage: " + str(self.damage))
-        text.append("Defense: " + str(self.defense))
-        text.append("Accuracy: " + str(self.accuracy))
-        text.append("Speed: " + str(self.speed))
-        text.append("Luck: " + str(self.luck))
+        text.append("|| Name: " + self.name)
+        text.append("|| Class: " + self.classification)
+        text.append("|| Level: " + str(self.level))
+        text.append("|| Experience: " + str(self.experience) + "/" + str(self.mexperience))
+        text.append("|| Health: " + str(self.health) + "/" + str(self.mhealth))
+        text.append("|| Mana: " + str(self.mana) + "/" + str(self.mmana))
+        text.append("|| Damage: " + str(self.damage))
+        text.append("|| Defense: " + str(self.defense))
+        text.append("|| Accuracy: " + str(self.accuracy))
+        text.append("|| Speed: " + str(self.speed))
+        text.append("|| Luck: " + str(self.luck))
+        text.append(" ")
         return text
 
     def stat_up(self, command):
