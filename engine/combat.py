@@ -114,23 +114,32 @@ def enemy_atk(character):
     return text
 
 
-def battle_win(character):
+def battle_win(character):  # Runs when winning a fight
     text = [f'You have defeated {session['enemy']['name']}.']
-    character.gold += session['enemy']['drop_gold']
+
+    character.gold += session['enemy']['gold']  # Looting Gold
     text.append(f"You got <span class='gold-text'>{session['enemy']['gold']} GOLD")
-    character.experience += session['enemy']['drop_experience']
+
+    character.experience += session['enemy']['experience']  # Looting Experience
     text.append(f"You got <span class='exp-text'>{session['enemy']['experience']} EXP")
+
+    # @TODO Add Looting Dropped Items
 
     session['dungeon_room'] = "Cleared"
     session['enemy'] = False
 
     text.append("How do you proceed?")
     text.append("<span class='gray-text'>Next Room [1], Exit Dungeon [2]")
+    text.append("· · ─────────────────── · · ")
     return text
 
 
-def battle_loss(character):
-    text = [f"<span class='yellow-text'>You have been defeated by {session['enemy']['name']}."]
+def battle_loss(character):  # Runs when losing a fight
+    text = [f"<span class='yellow-text'>You have been defeated by {session['enemy']['name']}.",
+            "· · ─────────────────── · · "]
+
+    # @TODO Add Dropping Random Percentage of Gold
+
     session['enemy'] = False
     character.dungeon_level -= 1
     return text
@@ -138,21 +147,21 @@ def battle_loss(character):
 
 def battle_sequence(command, character):
     text = ['']
-    if command == '4':
+    if command == '4':  # Prints enemy stats
         text = print_stats(session['enemy'])
         text.append("<span class='gray-text'>Attack [1], Block [2], Special [3]")
         text.append("<span class='gray-text'>Enemy Stats [4], Character Stats [5]")
         text.append("· · ─────────────────── · · ")
         return text
 
-    elif command == '5':
+    elif command == '5':  # Prints character stats
         text = Character.display_stats(character)
         text.append("<span class='gray-text'>Attack [1], Block [2], Special [3]")
         text.append("<span class='gray-text'>Enemy Stats [4], Character Stats [5]")
         text.append("· · ─────────────────── · · ")
         return text
 
-    if character.speed >= session['enemy']['speed']:
+    if character.speed >= session['enemy']['speed']:  # If player is faster than enemy
         text.extend(character_atk(command, character))
         if session['enemy']['health'] <= 0:
             text.extend(battle_win(character))
@@ -168,6 +177,7 @@ def battle_sequence(command, character):
         text.append("· · ─────────────────── · · ")
         return text
 
+    # If enemy is faster than player
     text.extend(enemy_atk(character))
     if character.health <= 0:
         text.extend(battle_loss(character))

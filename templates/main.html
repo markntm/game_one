@@ -33,8 +33,10 @@
         <div class="stats-box">
             <h3>Stats</h3>
             <ul>
-                <li>Health: {{ character.health }}</li>
-                <li>Mana: {{ character.mana }}</li>
+                <li>Level: {{ character.level }}</li>
+                <li>Experience: {{ character.experience }} / {{ character.mexperience }}</li>
+                <li>Health: {{ character.health }} / {{ character.mhealth }}</li>
+                <li>Mana: {{ character.mana }} / {{ character.mmana }}</li>
                 <li>Damage: {{ character.damage }}</li>
                 <li>Defense: {{ character.defense }}</li>
                 <li>Speed: {{ character.speed }}</li>
@@ -45,8 +47,38 @@
 
         <!-- Info Box -->
         <div class="info-box" id="info-box">
-            <h3>Room Info</h3>
-            <p>Explore the dungeon to reveal information about the current room.</p>
+            <h3>
+                {% if location == 'outside' %}
+                    OUTSIDE
+                {% elif location == 'dungeon' %}
+                    DUNGEON
+                {% elif location == 'inn'  %}
+                    INN
+                {% endif %}
+            </h3>
+
+            {% if location == 'dungeon' %}
+                {% if enemy %}
+                    <ul>
+                        <li>Name: {{ enemy.name }}</li>
+                        <li>Health: {{ enemy.health }} </li>
+                        <li>Damage: {{ enemy.damage }}</li>
+                        <li>Defense: {{ enemy.defense }}</li>
+                        <li>Speed: {{ enemy.speed }}</li>
+                        <li>
+                            {% if enemy.flying == True %}
+                                Flying
+                            {% else %}
+                                Not Flying
+                            {% endif %}
+                        </li>
+                    </ul>
+                {% endif %}
+            {% elif location == 'outside' %}
+                <p>
+                    You are near the dungeon, the inn, and the merchant shop.
+                </p>
+            {% endif %}
         </div>
 
         <!-- Action Box -->

@@ -53,7 +53,8 @@ def continue_game(character_id):
     session['init'] = True
 
     if character:
-        return render_template('main.html', character=character, messages=messages)
+        return render_template('main.html', character=character, messages=messages,
+                           dungeon_room=session['dungeon_room'], enemy=session['enemy'], location=session['location'])
     else:
         return redirect(url_for('start_screen'))
 
@@ -90,7 +91,8 @@ def main():
     session.modified = True
     db.session.commit()
 
-    return render_template('main.html', character=character, messages=session['messages'])
+    return render_template('main.html', character=character, messages=session['messages'],
+                           dungeon_room=session['dungeon_room'], enemy=session['enemy'], location=session['location'])
 
 
 @app.route('/inventory/<int:character_id>', methods=['GET', 'POST'])
