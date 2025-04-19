@@ -1,14 +1,10 @@
-from models import db
 import random
-from flask import Flask, render_template, request, redirect, url_for, session
-from models.character import Character, select_character
-from models.enemy import Enemy
-from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment, all_enchantments
-from engine.combat import battle_sequence
+from flask import session
+from game.models.enemy import Enemy
+from game.engine.combat import battle_sequence
 
 
-def init_sessions(character_id):
+def init_sessions():
     if 'messages' not in session:
         session['messages'] = []
     if 'action' not in session:
@@ -17,8 +13,10 @@ def init_sessions(character_id):
         session['location'] = 'outside'
     if 'init' not in session:
         session['init'] = True
-    if 'dungeon room' not in session:
-        session['dungeon room'] = 'Enemy Room'
+    if 'dungeon_room' not in session:
+        session['dungeon_room'] = 'Enemy Room'
+    if 'enemy' not in session:
+        session['enemy'] = None
 
 
 def outside(command, character):
@@ -201,7 +199,7 @@ def dungeon(command, character):
 
 def process_command(command, character):
     text = ["<span class='blue-text'>Input: " + str(command)]
-    init_sessions(character.id)
+    # init_sessions()
 
     if session['location'] == 'outside':
         text.extend(outside(command, character))

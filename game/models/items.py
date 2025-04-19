@@ -1,5 +1,4 @@
-from models import db
-from models.skill_enchantment import Enchantment, ShieldEnchantment, WeaponEnchantment
+from __init__ import db
 
 
 class Item(db.Model):

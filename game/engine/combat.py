@@ -1,10 +1,7 @@
-from models import db
 import random
-from flask import Flask, render_template, request, redirect, url_for, session
-from models.character import Character, select_character
-from models.enemy import Enemy, print_stats
-from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment, all_enchantments
+from flask import session
+from game.models.character import Character
+from game.models.enemy import print_stats
 
 
 def chance(acceptance):

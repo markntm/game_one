@@ -1,8 +1,4 @@
-from flask import Flask
-from models import db
-from models.character import character_items
-from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment
+from __init__ import db
 
 
 class Enemy(db.Model):

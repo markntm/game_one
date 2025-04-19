@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from models import db
-from engine.commands import process_command, init_sessions
-from models.character import Character, select_character
-from models.enemy import inst_enemies
-from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment
-
+from __init__ import db
+from game.engine.commands import process_command, init_sessions
+from game.models.character import Character, select_character
+from game.models.enemy import inst_enemies
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -37,7 +34,7 @@ def create_character():
         db.session.commit()
 
         character_id = Character.query.filter_by(name=name).first().id
-        init_sessions(character_id)
+        init_sessions()
 
         print(f'Character Created: {name}, Class: {char_class}')
 
@@ -46,17 +43,27 @@ def create_character():
 
 @app.route('/game/<int:character_id>', methods=['GET'])
 def continue_game(character_id):
-    # Load the character from the database
     character = db.session.get(Character, character_id)
+
+    if not character:
+        return redirect(url_for('start_screen'))
+
     session['character_id'] = character.id
+
+    # Safely initialize session variables only if they are missing
+    init_sessions()
+
     messages = ['Press Anything to Start']
     session['init'] = True
 
-    if character:
-        return render_template('main.html', character=character, messages=messages,
-                           dungeon_room=session['dungeon_room'], enemy=session['enemy'], location=session['location'])
-    else:
-        return redirect(url_for('start_screen'))
+    return render_template(
+        'main.html',
+        character=character,
+        messages=messages,
+        dungeon_room=session['dungeon_room'],
+        enemy=session['enemy'],
+        location=session['location']
+    )
 
 
 @app.route('/delete_character/<int:character_id>', methods=['POST'])
@@ -75,6 +82,7 @@ def delete_character(character_id):
 def main():
     """renders the actual game allowing for back and forth feedback"""
     character_id = session['character_id']
+
     if not character_id:
         return redirect(url_for('start_screen'))
     character = Character.query.get(character_id)
@@ -145,7 +153,7 @@ def clear_session():
 def test():
     print("Running test mode...")
     with app.app_context():
-        inst_enemies()
+        pass
     return
 
 
@@ -159,9 +167,5 @@ if __name__ == "__main__":
         test()
     else:
         app.run(debug=True)
+
         print("Starting Game...")
-
-
-
-
-

@@ -1,5 +1,4 @@
-from models import db
-from flask import Flask
+from __init__ import db
 
 
 class Skill:

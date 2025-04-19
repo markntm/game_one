@@ -1,7 +1,4 @@
-from flask import Flask
-from models import db
-from models.items import Item, Weapon, Shield, Armor, Accessory, Consumable, Scroll
-from models.skill_enchantment import Skill, Enchantment, WeaponEnchantment, ShieldEnchantment
+from __init__ import db
 
 character_items = db.Table('character_items',
                            db.Column('character_id', db.Integer, db.ForeignKey('characters.id'), primary_key=True),
@@ -215,6 +212,9 @@ class Character(db.Model):
 
         # Add the new item's stats to the character
         self.add_stat(item)
+
+
+from game.models.items import Item
 
 
 def select_character(name, classification):

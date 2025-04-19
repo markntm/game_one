@@ -100,8 +100,7 @@ body {
 
 /* Action Buttons (Moved to the bottom) */
 .character-actions {
-    position: sticky;
-    position: bottom;
+    position: absolute;
     bottom: 20px;
     left: 20px;
     right: 20px;
