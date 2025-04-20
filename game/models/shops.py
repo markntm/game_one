@@ -14,21 +14,37 @@ class Shop(db.Model):
         self.npc = npc
         self.items = []
 
-    def enter(self):
-        return f"You enter the {self.name}.\n {self.npc.speak()}"
+    def enter(self):  # override for every subclass
+        return [f"You enter the {self.name}.\n {self.npc.speak()}",
+                self.list()]
 
     def list_items(self):
         if not self.items:
             return "There's nothing here right now."
-        return "\n".join(f"- {item}" for item in self.items)
+        return ["*Lists 4 items that are being sold.*", "<span class='gray-text'>Back [5]"]
 
     def buy_item(self, item_name):
         if item_name in self.items:
             return f"You bought {item_name}!"
         return f"{item_name} is not available here."
 
+    def run(self, character, command, init):
+        if init:
+            self.enter()
+        else:
+            if command == '1' and self.items[0]:
+                pass
+            elif command == '2' and self.items[1]:
+                pass
+            elif command == '3' and self.items[2]:
+                pass
+            elif command == '4' and self.items[3]:
+                pass
+            elif command == '5':
+                return
 
-class WeaponShop(Shop):
+
+class ArmoryShop(Shop):
     def __init__(self, npc):
         super().__init__("Weapon Shop", npc)
         self.items = ["Sword", "Bow", "Dagger"]
