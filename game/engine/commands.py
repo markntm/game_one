@@ -17,13 +17,15 @@ def init_sessions():
         session['dungeon_room'] = 'Enemy Room'
     if 'enemy' not in session:
         session['enemy'] = None
+    if 'village' not in session:
+        session['village'] = 'village'
 
 
 def outside(command, character):
     if session['init']:
         text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
                 'Where would you like to go?',
-                "<span class='gray-text'>Dungeon [1], Shop [2], Inn [3], Reset [5]"]
+                "<span class='gray-text'>Dungeon [1], Village [2], Inn [3], Reset [5]"]
         session['init'] = False
         return text
 
@@ -35,7 +37,8 @@ def outside(command, character):
         text.extend(dungeon(command, character))
 
     elif command == '2':
-        session['location'] = 'shop'
+        session['location'] = 'village'
+        session['village'] = 'village'
         session['init'] = True
         text = ["──◇◆◇────◇◆◇────◇◆◇────◇◆◇──",
                 '    You entered the Shop']
@@ -207,8 +210,9 @@ def process_command(command, character):
     elif session['location'] == 'dungeon':
         text.extend(dungeon(command, character))
 
-    elif session['location'] == 'shop':
-        text.extend(shop(command))
+    elif session['location'] == 'village':
+        # run text.extend() import function from room.py
+        pass
 
     elif session['location'] == 'inn':
         text.extend(inn(command, character))
