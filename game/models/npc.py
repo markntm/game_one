@@ -1,6 +1,7 @@
 from __init__ import db
 import google.generativeai as genai
 
+# url to find key hopefully?
 genai.configure(api_key='https://ai.google.dev/competition/projects/multimodal-gemini-15-flash-api')
 
 

@@ -1,8 +1,8 @@
 from flask import session
-from __init__ import village_shops
+from shop_manager import village_shops
 
 
-def rooms_main(character, command):
+def rooms_main(command, character):
     if session['init'] and session['village'] == 'village':
         return ['Which shop would you like to visit?',
                 '<span class="gray-text">Armory [1], Consumable [2], Guide [3], Inn [4], Back [5]']
@@ -31,22 +31,20 @@ def rooms_main(character, command):
             return ['You exit the village.']
 
     if session['village'] == 'armory':
-        village_shops['armory'].run(character, command, session['init'])
         session['init'] = not session['init']
+        return village_shops['armory'].run(character, command, not session['init'])
 
     elif session['village'] == 'consumable':
-        village_shops['consumable'].run(character, command, session['init'])
         session['init'] = not session['init']
+        return village_shops['consumable'].run(character, command, not session['init'])
 
     elif session['village'] == 'guide':
-        village_shops['guide'].run(character, command, session['init'])
         session['init'] = not session['init']
+        return village_shops['guide'].run(character, command, not session['init'])
 
     elif session['village'] == 'inn':
-        village_shops['inn'].run(character, command, session['init'])
         session['init'] = not session['init']
+        return village_shops['inn'].run(character, command, not session['init'])
 
     else:
         return ['rooms error']
-
-

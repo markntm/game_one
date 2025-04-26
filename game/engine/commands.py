@@ -2,6 +2,7 @@ import random
 from flask import session
 from game.models.enemy import Enemy
 from game.engine.combat import battle_sequence
+from game.engine.room import rooms_main
 
 
 def init_sessions():
@@ -212,6 +213,7 @@ def process_command(command, character):
 
     elif session['location'] == 'village':
         # run text.extend() import function from room.py
+        text.extend(rooms_main(command, character))
         pass
 
     elif session['location'] == 'inn':

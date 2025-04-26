@@ -30,7 +30,7 @@ class Shop(db.Model):
 
     def run(self, character, command, init):
         if init:
-            self.enter()
+            return self.enter()
         else:
             if command == '1' and self.items[0]:
                 pass
