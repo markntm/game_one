@@ -6,6 +6,8 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
+    shop_id = db.Column(db.Integer, db.ForeignKey('shops.id'), nullable=False)
+
     classification = db.Column(db.String(50), nullable=False)  # Weapon, Shield, Armor, etc.
     image_url = db.Column(db.String(255))
     type = db.Column(db.String(50))  # Used for Single Table Inheritance (STI)
@@ -40,6 +42,7 @@ class Item(db.Model):
         self.name = name
         self.classification = classification
         self.image_url = image_url
+        self.shop = None
 
 
 class Weapon(Item):

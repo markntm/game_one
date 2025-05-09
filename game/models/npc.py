@@ -1,8 +1,7 @@
 from __init__ import db
-import google.generativeai as genai
-
-# url to find key hopefully?
-genai.configure(api_key='https://ai.google.dev/competition/projects/multimodal-gemini-15-flash-api')
+from secret import secrets
+from google import genai
+from google.genai import types
 
 
 class NPC(db.Model):
@@ -28,16 +27,14 @@ class NPC(db.Model):
 
 
 def ask_gemini(command, npc_name='Guide'):
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    convo = model.start_chat(
-        history=[
-            {
-                "role": "system",
-                "parts": [
-                    f"You are a wise and helpful NPC named {npc_name} in a medieval fantasy world. "
-                    f"Stay in character and provide immersive responses."]
-            }
-        ]
+    client = genai.Client(api_key=secrets['gemini_api_key'])
+
+    response = client.models.generate_content(
+        model=secrets['gemini_model'],
+        config=types.GenerateContentConfig(
+            system_instruction=f"You are a wise and helpful NPC named {npc_name} in a medieval fantasy world. "
+                               "Stay in character and provide immersive responses."),
+        contents=f"The user's input: {command}"
     )
-    response = convo.send_message(command)
+
     return response.text

@@ -6,7 +6,10 @@ class Shop(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    npc = db.relationship('NPC', backref='shops', lazy=True)
+
+    npc_id = db.Column(db.Integer, db.ForeignKey('NPC.id'), nullable=False)
+    npc = db.relationship('NPC', backref=db.backref('shop', uselist=False), lazy=True)
+
     items = db.relationship('Item', backref='shop', lazy='dynamic')
 
     def __init__(self, name, npc):
